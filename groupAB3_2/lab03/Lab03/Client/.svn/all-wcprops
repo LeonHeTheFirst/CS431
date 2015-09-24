@@ -1,0 +1,89 @@
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/sp15-cs431/!svn/ver/295/_projects/groupAB3_2/lab03/Lab03/Client
+END
+crc16.c
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/sp15-cs431/!svn/ver/295/_projects/groupAB3_2/lab03/Lab03/Client/crc16.c
+END
+flexserial.c
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/sp15-cs431/!svn/ver/295/_projects/groupAB3_2/lab03/Lab03/Client/flexserial.c
+END
+helloworld.mcw
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/sp15-cs431/!svn/ver/295/_projects/groupAB3_2/lab03/Lab03/Client/helloworld.mcw
+END
+helloworld.cof
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/sp15-cs431/!svn/ver/295/_projects/groupAB3_2/lab03/Lab03/Client/helloworld.cof
+END
+crc16.h
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/sp15-cs431/!svn/ver/295/_projects/groupAB3_2/lab03/Lab03/Client/crc16.h
+END
+flexserial.h
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/sp15-cs431/!svn/ver/295/_projects/groupAB3_2/lab03/Lab03/Client/flexserial.h
+END
+main.c
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/svn/sp15-cs431/!svn/ver/295/_projects/groupAB3_2/lab03/Lab03/Client/main.c
+END
+helloworld.map
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/sp15-cs431/!svn/ver/295/_projects/groupAB3_2/lab03/Lab03/Client/helloworld.map
+END
+lcd.h
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/svn/sp15-cs431/!svn/ver/295/_projects/groupAB3_2/lab03/Lab03/Client/lcd.h
+END
+helloworld.mcp
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/sp15-cs431/!svn/ver/295/_projects/groupAB3_2/lab03/Lab03/Client/helloworld.mcp
+END
+led.h
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/svn/sp15-cs431/!svn/ver/295/_projects/groupAB3_2/lab03/Lab03/Client/led.h
+END
+types.h
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/sp15-cs431/!svn/ver/295/_projects/groupAB3_2/lab03/Lab03/Client/types.h
+END
+helloworld.mcs
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/sp15-cs431/!svn/ver/295/_projects/groupAB3_2/lab03/Lab03/Client/helloworld.mcs
+END
+helloworld.hex
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/sp15-cs431/!svn/ver/295/_projects/groupAB3_2/lab03/Lab03/Client/helloworld.hex
+END

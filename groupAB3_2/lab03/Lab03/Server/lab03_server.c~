@@ -1,0 +1,137 @@
+//
+// CS 431 - Lab 03 Server Skeleton
+// PC/Linux (Provided)
+//
+
+#include <stdlib.h>
+#include <stdio.h>
+#include <termios.h>
+#include <unistd.h>
+#include <sys/types.h>
+#include <fcntl.h>
+#include <string.h>
+#include "pc_crc16.h"
+#include "lab03.h"
+
+int main(int argc, char* argv[])
+{
+	double troll_pct=0;		// Perturbation % for the troll (if needed)
+	int ifd,ofd,i,N,troll=0;	// Input and Output file descriptors (serial/troll)
+	char str[MSG_BYTES_MSG],opt;	// String input
+	struct termios oldtio, tio;	// Serial configuration parameters
+	int VERBOSE = 0;		// Verbose output - can be overriden with -v
+
+	// Command line options
+	while ((opt = getopt(argc, argv, "t:v")) != -1) {
+		switch (opt) {
+			case 't':	troll = 1; 
+					troll_pct = atof(optarg);
+					break;
+			case 'v':	VERBOSE = 1; break;
+			default: 	break;
+		}
+	}
+
+	printf("CS431 - Lab 03 Server\n(Enter a message to send.  Type \"quit\" to exit)\n");
+
+
+	//
+	// WRITE ME: Open the serial port (/dev/ttyS0) read-write
+	//
+	int sfd = open("/dev/ttyS0", O_RDWR | O_NOCTTY);
+
+	// Start the troll if necessary
+	if (troll)
+	{
+		// Open troll process (lab03_troll) for output only
+		FILE * pfile;		// Process FILE for troll (used locally only)
+		char cmd[128];		// Shell command
+
+		snprintf(cmd, 128, "./lab03_troll -p%f %s", troll_pct, (VERBOSE) ? "-v" : "");
+
+		pfile = popen(cmd, "w");
+		if (!pfile) { perror("lab03_troll"); exit(-1); }
+		ofd = fileno(pfile);
+	}
+	else ofd = sfd;		// Use the serial port for both input and output
+	
+
+
+	//
+ 	// WRITE ME: Set up the serial port parameters and data format
+	//
+	tcgetattr(sfd, &oldtio); // oldtio stores old serial settings
+	tio.c_cflag = B9600 | CS8 | CLOCAL | CREAD;
+	tio.c_iflag = 0;
+	tio.c_oflag = 0;
+	tio.c_lflag = 0;
+	tcflush(sfd, TCIFLUSH); // flush pending transfers
+	tcsetattr(sfd, TCSANOW, &tio); // enable new serial port settings
+
+	while(1)
+	{
+
+		//
+		// WRITE ME: Read a line of input (Hint: use fgetc(stdin) to read each character)
+		//
+		char bigbuf[300];
+		bigbuf[0] = 0;
+		
+		//while(getline((char**)&str, NULL, stdin) == -1);
+		int str_len = 0;
+		while ((bigbuf[4+str_len] = fgetc(stdin)) != '\n') {
+			str_len++;
+			//printf("str_len = %d \n", str_len);
+		}
+		bigbuf[4+str_len] = '\0';
+		if (strcmp(bigbuf+4, "quit") == 0) break;
+
+		//
+		// WRITE ME: Compute crc (only lowest 16 bits are returned)
+		//
+		char ack = 0;
+		char crc1 = 0x00FF & pc_crc16(bigbuf+4, str_len);
+		char crc2 = 0x00FF & (pc_crc16(bigbuf+4, str_len) >> 8);
+		int attempts = 0;
+
+		bigbuf[1] = crc2;
+		bigbuf[2] = crc1;
+		bigbuf[3] = (char)str_len;
+
+		//while (!ack)
+		//{
+			printf("Sending (attempt %d)...\n", ++attempts);
+			//printf("%c %c %d %s\n", bigbuf[1],bigbuf[2], bigbuf[3], bigbuf+4);
+			
+			// 
+			// WRITE ME: Send message
+			//
+			
+			write(ofd, bigbuf, 4 + str_len);
+			//printf("%s\n", bigbuf+4);
+			printf("Message sent, waiting for ack... ");
+			
+			//
+			// WRITE ME: Wait for MSG_ACK or MSG_NACK
+			//
+			
+			read(sfd, &ack, 1);
+
+			printf("%s\n", ack ? "ACK" : "NACK, resending");
+		//}
+		printf("\n");
+	}
+
+
+
+	//
+	// WRITE ME: Reset the serial port parameters
+	//
+	
+	tcsetattr(sfd, TCSANOW, &oldtio); // enable old serial port settings
+
+	// Close the serial port
+	close(ifd);
+	
+	return 0;
+}
